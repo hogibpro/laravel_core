@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,10 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/hello', function () {
-    return 11111111111;
-});
+Route::get('/users/register', [UserController::class, 'register']);
 
-Route::get('/{any}', function () {
-    return view('post');
-  })->where('any', '.*');
+// Route::get('/{any}', function () {
+//     return view('post');
+//   })->where('any', '.*');
