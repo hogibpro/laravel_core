@@ -3,13 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Container\Container;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class UserController extends Controller 
 {
     public function register(Request $request)
     {
-        $service = new UserService(new Sha1Hasher('0123'), new Mailer(new FakeMailTransport));
+        // $service = new UserService(
+        //     new Sha1Hasher('0123'), 
+        //     new Mailer(new FakeMailTransport)
+        // );
+
+        $container = Container::getInstance();
+        $container->bind(Hasher::class, Sha1Hasher::class);
+        $container->bind(MailTransport::class, FakeMailTransport::class);
+        $service = $container->make(UserService::class);
+
+        // $appRequest = app('request');
+        // dd($appRequest, $request);
+
         $service->register($request);
     }
 }
@@ -115,7 +128,7 @@ class UserService
     protected $hasher;
     protected $mailer;
 
-    public function __construct(Hasher $hasher, Mailer $mailer)
+    public function __construct(b  $hasher, Mailer $mailer)
     {
         $this->hasher = $hasher; 
         $this->mailer = $mailer;
@@ -127,7 +140,7 @@ class UserService
         $user->password = $this->hasher->make($request->get('password'));
         $user->email = 'hodh6c3@gmail.com';
         $this->mailer->send($user->email, 'user.register', ['user' => $user]);
-        dd($user);
+        // dd($user);
     }
 
     /*  neu khong su dung dependency injection thi cu moi khi su dung 1 
