@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Hashing\Hasher;
 use App\Hashing\Sha1Hasher;
 use App\Mail\FakeMailTransport;
+use App\Mail\GmailMailTransport;
 use App\Mail\MailTransport;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
@@ -25,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
         // });
         $this->app->instance(Sha1Hasher::class, new Sha1Hasher('099ss'));
         //end
-        $this->app->bind(MailTransport::class, FakeMailTransport::class);
+        $this->app->bind(MailTransport::class, GmailMailTransport::class);
     }
 
     /**

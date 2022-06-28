@@ -8,15 +8,15 @@ use App\Services\UserService;
 
 class UserController extends Controller 
 {
-    private $service;
-
-    public function __construct(UserService $service)
+    private $userService;
+    //khi khoi tao laravel dung container de khoi tao no se doc vao __construct de khoi tao
+    public function __construct(UserService $userService)
     {
-        $this->service = $service;
+        $this->userService = $userService;
     }
 
     public function register(Request $request)
-    {dump($this->service,$this->service,$this->service);
+    {dump($this->userService,$this->service,$this->service);
         // $service = new UserService(
         //     new Sha1Hasher('0123'), 
         //     new Mailer(new FakeMailTransport)
@@ -36,7 +36,7 @@ class UserController extends Controller
         // $appRequest = app('request');
         // dd($appRequest, $request);
         // dd($service, $container->make(UserService::class), $container->make(UserService::class));
-        $this->service->register($request);
+        $this->userService->register($request);
     }
 }
 
